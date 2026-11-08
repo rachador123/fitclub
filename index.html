@@ -92,6 +92,13 @@ h2{font-size:clamp(40px,8vw,120px)}
 .card{text-align:left;display:block;transform-style:preserve-3d;will-change:transform}
 .card .ph{aspect-ratio:4/5}.card .ph.b{position:absolute;inset:0;opacity:0;transition:opacity .5s;--r:90deg}
 .card:hover .ph.b{opacity:1}.pw{position:relative}
+.card .pw img{
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  display:block;
+  border-radius:4px;
+}
 .tag{position:absolute;z-index:2;top:12px;left:12px;background:var(--lm);color:var(--bk);font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;letter-spacing:.06em}
 .card h4{font-size:17px;font-weight:500;margin-top:14px}.card .m{display:flex;justify-content:space-between;color:var(--gy);font-size:14px}
 .card .m b{color:var(--wh);font-weight:500}
@@ -207,14 +214,13 @@ footer{border-top:1px solid #2a2a2a;padding:56px 0 0;overflow:hidden}
 const CFG={whatsapp:"5519992725205",instagram:"https://www.instagram.com/fitclub_sports/"};
 const CATS={men:"Masculino",women:"Feminino",acc:"Acessórios",train:"Treino"};
 const PRODUTOS=[
-{id:1,n:"Camiseta Aero Pro",p:139.9,c:"men",t:"NOVO",cores:["Preto","Lime"],tam:["P","M","G","GG"],d:"Malha respirável de secagem rápida, costura plana e caimento atlético."},
-{id:2,n:"Shorts Core 7”",p:119.9,c:"men",t:"MAIS VENDIDO",cores:["Grafite","Preto"],tam:["P","M","G"],d:"Leve, com bolso interno e liberdade total para agachar e correr."},
-{id:3,n:"Top Motion",p:99.9,c:"women",t:"NOVO",cores:["Preto","Branco"],tam:["P","M","G"],d:"Sustentação média, tecido macio e alças que não marcam."},
-{id:4,n:"Legging Sculpt",p:189.9,c:"women",t:"MAIS VENDIDO",cores:["Preto","Grafite","Lime"],tam:["PP","P","M","G"],d:"Cintura alta com compressão que acompanha cada movimento."},
-{id:5,n:"Garrafa Steel 750",p:89.9,c:"acc",t:"EDIÇÃO LIMITADA",cores:["Preto"],tam:["Único"],d:"Aço inox com isolamento térmico. Gelada por 24 horas."},
-{id:6,n:"Bolsa Duffel 40L",p:249.9,c:"acc",t:"",cores:["Preto"],tam:["Único"],d:"Compartimento para tênis, impermeável e alças reforçadas."},
-{id:7,n:"Regata Essencial",p:79.9,c:"train",t:"PROMOÇÃO",cores:["Branco","Preto"],tam:["P","M","G","GG"],d:"O básico do treino: leve, solta e sem excesso."},
-{id:8,n:"Kit de Faixas Elásticas",p:59.9,c:"train",t:"NOVO",cores:["Lime"],tam:["Único"],d:"Três resistências para aquecimento, mobilidade e força."}];
+
+
+{id:1,n:"Shorts Gymshark",p:69.90,c:"men",t:"NOVO",cores:["Preto"],tam:["P","M","G"],d:"Shorts Gymshark.",img:"https://down-br.img.susercontent.com/file/sg-11134201-7rdxz-md6zvtn528no2c"},
+
+{id:2,n:"Camisa Gymshark Preta Logo Azul",p:109.90,c:"men",t:"NOVO",cores:["Preto"],tam:["P","M","G"],d:"Camisa Gymshark preta com logo azul.",img:"https://images.stockx.com/images/Gymshark-Onyx-V1-T-Shirt-Black-Onyx-Grey-Brand-Blue.jpg?fit=fill&bg=FFFFFF&w=300&h=214&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1784230408"},
+
+{id:3,n:"Camisa Gymshark Cinza",p:109.90,c:"men",t:"NOVO",cores:["Cinza"],tam:["P","M","G"],d:"Camisa Gymshark cinza.",img:"https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTXafwMHKuZOsK0NZ7xLw3OX5LwvCa_JTMjtgkK-n2gme47Xu4hntSCmefd53cy0_qg16q25t0Ea7ZWX2ZoG_g13MCjNVasZg"}];
 /* Para usar o Supabase: troque o conteúdo desta função por uma consulta à tabela products
    (is_active = true). Nesta página publicada, conexões externas são bloqueadas. */
 async function carregar(){return PRODUTOS}
@@ -239,7 +245,7 @@ function render(){
  const g=$("#grid");g.innerHTML="";
  if(!l.length){g.innerHTML='<div class="empty">Nenhum produto encontrado. Tente outra categoria ou busca.</div>';return}
  l.forEach(p=>{const a=document.createElement("button");a.className="card";a.setAttribute("aria-label","Ver "+p.n);
-  a.innerHTML=`<div class="pw"><div class="ph" style="--h:${60+p.id*12}"><i></i></div><div class="ph b" style="--h:${100+p.id*8}"><i></i></div>${p.t?`<span class="tag">${p.t}</span>`:""}</div><h4>${p.n}</h4><div class="m"><span>${CATS[p.c]}</span><b>${brl(p.p)}</b></div>${p.cores.length?`<div class="m"><span>${p.cores.join(" · ")}</span></div>`:""}<span class="v">VER PRODUTO</span>`;
+  a.innerHTML=`<div class="pw">${p.img?`<img src="${p.img}" alt="${p.n}" loading="lazy">`:`<div class="ph" style="--h:${60+p.id*12}"><i></i></div><div class="ph b" style="--h:${100+p.id*8}"><i></i></div>`}${p.t?`<span class="tag">${p.t}</span>`:""}</div><h4>${p.n}</h4><div class="m"><span>${CATS[p.c]}</span><b>${brl(p.p)}</b></div>${p.cores.length?`<div class="m"><span>${p.cores.join(" · ")}</span></div>`:""}<span class="v">VER PRODUTO</span>`;
   a.onclick=()=>abrir(p);
   if(FINE&&!RM){a.onmousemove=e=>{const r=a.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;gsap.to(a,{rotationY:x*10,rotationX:-y*10,duration:.4})};a.onmouseleave=()=>gsap.to(a,{rotationX:0,rotationY:0,duration:.6})}
   g.appendChild(a)});
@@ -251,11 +257,18 @@ $("#sb").onclick=()=>{goTo("#colecao");setTimeout(()=>$("#q").focus(),700)};
 let last;
 function abrir(p){last=document.activeElement;
  const msg=encodeURIComponent("Olá! Tenho interesse no produto: "+p.n);
- $("#pn").innerHTML=`<button id="cl" aria-label="Fechar">✕</button><div><div class="ph main" id="mg" style="--h:${60+p.id*12}"><i></i></div><div class="th">${[0,1,2].map(i=>`<button class="${i?"":"on"}" aria-label="Foto ${i+1}" data-i="${i}"><div class="ph" style="--h:${60+p.id*12+i*25};--r:${i*50}deg"><i></i></div></button>`).join("")}</div></div>
- <div class="inf"><span style="color:var(--gy);font-size:13px">${CATS[p.c]}${p.t?" · "+p.t:""}</span><h3 class="big">${p.n}</h3><div class="pr">${brl(p.p)}</div><p>${p.d}</p>
- <small>TAMANHOS</small><div class="op">${p.tam.map(t=>`<span>${t}</span>`).join("")}</div>
- ${p.cores.length?`<small>CORES</small><div class="op">${p.cores.map(t=>`<span>${t}</span>`).join("")}</div>`:""}
- <a class="btn p" style="margin-top:30px" target="_blank" rel="noopener" href="https://wa.me/${CFG.whatsapp}?text=${msg}">TENHO INTERESSE</a></div>`;
+ $("#pn").innerHTML=`<button id="cl" aria-label="Fechar">✕</button><div>
+<div class="${p.img?"":"ph"} main" id="mg" style="${p.img?"":"--h:"+(60+p.id*12)}">
+${p.img?`<img src="${p.img}" alt="${p.n}" style="width:100%;height:100%;object-fit:cover;display:block">`:"<i></i>"}
+</div>
+<div class="th">${[0,1,2].map(i=>`<button class="${i?"":"on"}" aria-label="Foto ${i+1}" data-i="${i}">
+${p.img?`<img src="${p.img}" alt="${p.n}" style="width:100%;height:100%;object-fit:cover;display:block">`:`<div class="ph" style="--h:${60+p.id*12+i*25};--r:${i*50}deg"><i></i></div>`}
+</button>`).join("")}</div></div>
+
+<div class="inf"><span style="color:var(--gy);font-size:13px">${CATS[p.c]}${p.t?" · "+p.t:""}</span><h3 class="big">${p.n}</h3><div class="pr">${brl(p.p)}</div><p>${p.d}</p>
+<small>TAMANHOS</small><div class="op">${p.tam.map(t=>`<span>${t}</span>`).join("")}</div>
+${p.cores.length?`<small>CORES</small><div class="op">${p.cores.map(t=>`<span>${t}</span>`).join("")}</div>`:""}
+<a class="btn p" style="margin-top:30px" target="_blank" rel="noopener" href="https://wa.me/${CFG.whatsapp}?text=${msg}">TENHO INTERESSE</a></div>`;
  $$(".th button").forEach(b=>b.onclick=()=>{$$(".th button").forEach(x=>x.classList.remove("on"));b.classList.add("on");$("#mg").style.setProperty("--r",b.dataset.i*50+"deg");$("#mg").style.setProperty("--h",60+p.id*12+b.dataset.i*25)});
  $("#cl").onclick=fechar;$("#md").style.display="block";lenis&&lenis.stop();document.body.style.overflow="hidden";
  gsap.fromTo("#md",{opacity:0},{opacity:1,duration:.3});gsap.fromTo("#pn",{y:60,scale:.96},{y:0,scale:1,duration:.5,ease:"power3.out"});$("#cl").focus()}
